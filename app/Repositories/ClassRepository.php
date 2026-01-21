@@ -30,4 +30,3 @@ class ClassRepository implements RepositoryInterface
         return $stmt->execute(['name' => $data['name'], 'id' => $id]);
     }
 }
-
