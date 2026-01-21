@@ -22,7 +22,7 @@
                                 </span>
                             </div>
                             <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                                {{ Str::limit($brief->description, 120) }}
+                                {{ strlen($brief->description) > 120 ? substr($brief->description, 0, 120) . '...' : $brief->description }}
                             </p>
                             <div class="flex items-center text-sm text-slate-500">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
