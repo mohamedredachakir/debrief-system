@@ -25,4 +25,3 @@
     @endforeach
 </div>
 @endsection
-
