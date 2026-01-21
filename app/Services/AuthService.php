@@ -16,7 +16,7 @@ class AuthService
     public function authenticate($email, $password)
     {
         $user = $this->userRepo->findByEmail($email);
-        
+
         if ($user && password_verify($password, $user->password)) {
             return $user;
         }
