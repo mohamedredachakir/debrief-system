@@ -6,7 +6,7 @@
     <form action="/teacher/evaluate/store" method="POST">
         <input type="hidden" name="brief_id" value="{{ $brief_id }}">
         <input type="hidden" name="learner_id" value="{{ $learner_id }}">
-        
+
         <h3>Competences</h3>
         @foreach($competences as $c)
             <div style="margin-bottom: 2rem; border-bottom: 1px solid #334155; padding-bottom: 1rem;">
@@ -25,7 +25,7 @@
                 </div>
             </div>
         @endforeach
-        
+
         <button type="submit" class="btn">Submit Evaluation</button>
     </form>
 </div>
