@@ -38,3 +38,4 @@ class ClassModel extends Model
         return $stmt->execute(['name' => $data['name']]);
     }
 }
+
