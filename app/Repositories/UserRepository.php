@@ -7,19 +7,16 @@ use App\Models\User;
 class UserRepository implements RepositoryInterface
 {
 
-
     public function find($id)
     {
         return User::find($id);
     }
-    
+
     public function findByEmail($email) 
     {
         return User::findByEmail($email);
     }
 
-
-    
     public function all()
     {
         return User::fetchAll("SELECT users.*, classes.name as class_name FROM users LEFT JOIN classes ON users.class_id = classes.id ORDER BY users.role, users.name", [], User::class);
@@ -42,7 +39,7 @@ class UserRepository implements RepositoryInterface
     public function update($id, array $data)
     {
         $db = \App\Core\Database::getInstance();
-        // Dynamic update query would be better, but fixed for now
+
         $sql = "UPDATE users SET name = :name, email = :email, role = :role, class_id = :class_id";
         $params = [
             'name' => $data['name'],
@@ -56,17 +53,25 @@ class UserRepository implements RepositoryInterface
             $sql .= ", password = :password";
             $params['password'] = $data['password'];
         }
-        
+
         $sql .= " WHERE id = :id";
-        
+
         $stmt = $db->getConnection()->prepare($sql);
         return $stmt->execute($params);
     }
 
     public function getByClass($classId, $role = 'learner')
     {
-        // Mock query for now inside Model or here
-        // Ideally Model::where(...)
+
         return User::fetchAll("SELECT * FROM users WHERE class_id = :cid AND role = :role", ['cid' => $classId, 'role' => $role], User::class);
+    }
+
+    public function getTeacherClasses($teacherId)
+    {
+        return User::fetchAll("
+            SELECT c.* FROM classes c
+            INNER JOIN teacher_classes tc ON c.id = tc.class_id
+            WHERE tc.teacher_id = :tid
+        ", ['tid' => $teacherId], \App\Models\ClassModel::class);
     }
 }
