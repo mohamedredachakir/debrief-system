@@ -44,4 +44,3 @@ INSERT INTO briefs (title, description, duration_days, type, sprint_id) VALUES
 
 -- Assign Class 1 to Learners
 UPDATE users SET class_id = 1 WHERE role = 'learner';
-
