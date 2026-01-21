@@ -65,3 +65,4 @@ class User extends Model
         return $db->lastInsertId();
     }
 }
+
