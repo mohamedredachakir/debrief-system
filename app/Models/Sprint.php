@@ -5,23 +5,13 @@ namespace App\Models;
 class Sprint extends Model
 {
     protected $table = 'sprints';
-    
+
     public int $id;
     public string $name;
     public string $start_date;
     public int $duration;
 
-    public function __construct(
-        int $id = 0,
-        string $name = '',
-        string $start_date = '',
-        int $duration = 0
-    ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->start_date = $start_date;
-        $this->duration = $duration;
-    }
+    public function __construct() {}
 
     public static function getByClass($classId)
     {
