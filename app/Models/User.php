@@ -15,23 +15,9 @@ class User extends Model
     public string $password;
     public string $role;
     public ?int $class_id = null;
-    public ?string $class_name = null; // For joins
+    public ?string $class_name = null; 
 
-    public function __construct(
-        int $id = 0,
-        string $name = '',
-        string $email = '',
-        string $password = '',
-        string $role = '',
-        ?int $class_id = null
-    ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->email = $email;
-        $this->password = $password;
-        $this->role = $role;
-        $this->class_id = $class_id;
-    }
+    public function __construct() {}
 
     public static function findByEmail($email)
     {
@@ -51,9 +37,9 @@ class User extends Model
         $db = Database::getInstance()->getConnection();
         $sql = "INSERT INTO users (name, email, password, role, class_id) VALUES (:name, :email, :password, :role, :class_id)";
         $stmt = $db->prepare($sql);
-        
+
         $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
-        
+
         $stmt->execute([
             'name' => $data['name'],
             'email' => $data['email'],
