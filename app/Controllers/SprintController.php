@@ -12,7 +12,25 @@ class SprintController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->checkAuth('admin');
         $this->service = new StructureService();
+    }
+
+    private function checkAuth($requiredRole = null)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+
+        if ($requiredRole && $_SESSION['user_role'] !== $requiredRole) {
+            header('Location: /login');
+            exit();
+        }
     }
 
     public function index()
@@ -29,12 +47,10 @@ class SprintController extends Controller
 
     public function create()
     {
-        // We can create a sprint for a specific class context if link is from class, 
-        // but now sprints are global/multi-class.
-        // Let's pass all classes to select.
+
         $classes = $this->service->getAllClasses();
         $competences = $this->service->getAllCompetences();
-        
+
         $defaultClassId = $_GET['class_id'] ?? null;
 
         $this->view('admin.sprints.create', [
@@ -47,11 +63,11 @@ class SprintController extends Controller
     public function store()
     {
         $this->service->createSprint($_POST);
-        // Redirect back to class view if context exists, or dashboard/sprints list
+
         if (!empty($_POST['default_class_id'])) {
              $this->redirect('/admin/classes/sprints?class_id=' . $_POST['default_class_id']);
         } else {
-             $this->redirect('/admin/classes'); // Fallback
+             $this->redirect('/admin/classes'); 
         }
     }
 
@@ -59,11 +75,11 @@ class SprintController extends Controller
     {
         $id = $_GET['id'] ?? null;
         if (!$id) { $this->redirect('/admin/classes'); return; }
-        
+
         $sprint = $this->service->getSprint($id);
         $classes = $this->service->getAllClasses();
         $competences = $this->service->getAllCompetences();
-        
+
         $assignedClassIds = $this->service->getSprintClasses($id);
         $assignedCompIds = $this->service->getSprintCompetences($id);
 
@@ -75,7 +91,7 @@ class SprintController extends Controller
             'assignedCompIds' => $assignedCompIds
         ]);
     }
-    
+
     public function update()
     {
         $this->service->updateSprint($_POST['id'], $_POST);
