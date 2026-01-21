@@ -5,29 +5,15 @@ namespace App\Models;
 class Evaluation extends Model
 {
     protected $table = 'evaluations';
-    
+
     public int $id;
     public int $learner_id;
     public int $brief_id;
     public int $competence_id;
     public string $level;
     public ?string $comment;
-    
-    public function __construct(
-        int $id = 0,
-        int $learner_id = 0, 
-        int $brief_id = 0, 
-        int $competence_id = 0, 
-        string $level = 'IMITER', 
-        ?string $comment = null
-    ) {
-        $this->id = $id;
-        $this->learner_id = $learner_id;
-        $this->brief_id = $brief_id;
-        $this->competence_id = $competence_id;
-        $this->level = $level;
-        $this->comment = $comment;
-    }
+
+    public function __construct() {}
 
     public static function create($data)
     {
