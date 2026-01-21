@@ -29,3 +29,4 @@ class Competence extends Model
         return self::fetchAll("SELECT * FROM competences ORDER BY code ASC", [], self::class);
     }
 }
+
