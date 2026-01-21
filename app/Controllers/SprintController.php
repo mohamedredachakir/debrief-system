@@ -82,4 +82,3 @@ class SprintController extends Controller
         $this->redirect('/admin/classes/sprints?class_id=' . $_POST['class_id']);
     }
 }
-
