@@ -24,3 +24,4 @@ class BriefRepository implements RepositoryInterface
         // Brief::create($data)
     }
 }
+
