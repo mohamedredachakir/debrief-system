@@ -98,4 +98,12 @@
   .purple-border {
     border-color: rgba(139, 92, 246, 0.2);
   }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
 }
