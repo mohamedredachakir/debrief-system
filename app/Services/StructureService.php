@@ -6,6 +6,7 @@ use App\Repositories\ClassRepository;
 use App\Repositories\SprintRepository;
 use App\Repositories\BriefRepository;
 use App\Repositories\CompetenceRepository;
+use App\Services\UserService;
 
 class StructureService
 {
@@ -13,6 +14,7 @@ class StructureService
     private $sprintRepo;
     private $briefRepo;
     private $competenceRepo;
+    private $userService;
 
     public function __construct()
     {
@@ -20,8 +22,9 @@ class StructureService
         $this->sprintRepo = new SprintRepository();
         $this->briefRepo = new BriefRepository();
         $this->competenceRepo = new CompetenceRepository();
+        $this->userService = new UserService();
     }
-    
+
     public function getAllCompetences()
     {
         return $this->competenceRepo->all();
@@ -74,7 +77,7 @@ class StructureService
     {
         return $this->sprintRepo->update($id, $data);
     }
-    
+
     public function getBriefsForSprint($sprintId)
     {
         return $this->briefRepo->getBySprint($sprintId);
@@ -94,9 +97,32 @@ class StructureService
     {
         return $this->competenceRepo->update($id, $data);
     }
-    
+
     public function getBrief($id)
     {
         return $this->briefRepo->find($id);
+    }
+
+    public function createBrief($data)
+    {
+        return $this->briefRepo->create($data);
+    }
+
+    public function getSprintsForTeacherClasses($teacherId)
+    {
+        $teacherClasses = $this->userService->getTeacherClasses($teacherId);
+        if (empty($teacherClasses)) {
+            return [];
+        }
+
+        $classIds = array_column($teacherClasses, 'id');
+        $placeholders = str_repeat('?,', count($classIds) - 1) . '?';
+
+        $sql = "SELECT DISTINCT s.* FROM sprints s
+                INNER JOIN class_sprint cs ON s.id = cs.sprint_id
+                WHERE cs.class_id IN ($placeholders)
+                ORDER BY s.start_date ASC";
+
+        return \App\Models\Sprint::fetchAll($sql, $classIds, \App\Models\Sprint::class);
     }
 }
