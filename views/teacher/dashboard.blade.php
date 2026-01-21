@@ -137,7 +137,7 @@
                         </svg>
                     </div>
                     <h4 class="font-semibold text-slate-900 mb-1">Active Briefs</h4>
-                    <p class="text-2xl font-bold text-emerald-600">{{ $sprints->sum(fn($s) => count($s->briefs ?? [])) }}</p>
+                    <p class="text-2xl font-bold text-emerald-600">{{ array_sum(array_map(fn($s) => count($s->briefs ?? []), $sprints ?? [])) }}</p>
                 </div>
 
                 <div class="card text-center">
