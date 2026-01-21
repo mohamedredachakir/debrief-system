@@ -12,7 +12,25 @@ class CompetenceController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->checkAuth('admin');
         $this->service = new StructureService();
+    }
+
+    private function checkAuth($requiredRole = null)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+
+        if ($requiredRole && $_SESSION['user_role'] !== $requiredRole) {
+            header('Location: /login');
+            exit();
+        }
     }
 
     public function index()
@@ -28,7 +46,7 @@ class CompetenceController extends Controller
 
     public function store()
     {
-        // Add basic validation
+
         if (empty($_POST['code']) || empty($_POST['label'])) {
              $this->view('admin.competences.create', ['error' => 'All fields required']);
              return;
