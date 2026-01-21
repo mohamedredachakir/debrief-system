@@ -55,3 +55,4 @@ abstract class Model
         return $stmt->fetchAll();
     }
 }
+
