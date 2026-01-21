@@ -100,3 +100,4 @@ class StructureService
         return $this->briefRepo->find($id);
     }
 }
+
