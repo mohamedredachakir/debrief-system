@@ -60,4 +60,3 @@ A comprehensive school/learning management system built with PHP 8, MVC architec
 *   `routes/`: Route definitions.
 *   `views/`: Blade templates.
 *   `storage/`: Cache and views compilation.
-
