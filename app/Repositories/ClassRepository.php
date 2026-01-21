@@ -23,7 +23,7 @@ class ClassRepository implements RepositoryInterface
 
     public function update($id, array $data)
     {
-        // Add update method to Model or query directly
+
         $sql = "UPDATE classes SET name = :name WHERE id = :id";
         $db = \App\Core\Database::getInstance();
         $stmt = $db->getConnection()->prepare($sql);
