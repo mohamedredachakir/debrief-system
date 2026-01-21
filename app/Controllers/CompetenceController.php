@@ -51,4 +51,3 @@ class CompetenceController extends Controller
         $this->redirect('/admin/competences');
     }
 }
-
