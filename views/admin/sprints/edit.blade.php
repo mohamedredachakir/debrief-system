@@ -9,18 +9,17 @@
     <div class="auth-card" style="max-width:600px;">
         <form action="/admin/sprints/update" method="POST">
             <input type="hidden" name="id" value="{{ $sprint->id }}">
-            <!-- Passing a class_id to return to if present in query, bit complex, lets default back to classes list usually -->
-            
+
             <div class="form-group">
                 <label>Name</label>
                 <input type="text" name="name" value="{{ $sprint->name }}" required>
             </div>
-            
+
             <div class="form-group">
                  <label>Start Date</label>
                  <input type="date" name="start_date" value="{{ $sprint->start_date }}" required>
             </div>
-            
+
             <div class="form-group">
                  <label>Duration (Days)</label>
                  <input type="number" name="duration" value="{{ $sprint->duration }}" required min="1">
