@@ -3,7 +3,7 @@
 @section('content')
 <div class="header-flex">
     <h1>Edit User</h1>
-    <a href="/admin/users" class="btn" style="background:var(--bg-card);">Back</a>
+    <a href="/admin/users" class="btn btn-secondary">Back</a>
 </div>
 <div class="auth-wrapper" style="min-height:auto;">
     <div class="auth-card" style="max-width:600px;">
@@ -39,7 +39,7 @@
                 </select>
             </div>
             <div class="actions">
-                <button type="submit" class="btn" style="width:100%;">Update User</button>
+                <button type="submit" class="btn btn-primary w-full">Update User</button>
             </div>
         </form>
     </div>

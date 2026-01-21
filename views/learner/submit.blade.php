@@ -21,7 +21,7 @@
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn">{{ $submission ? 'Update Submission' : 'Submit Work' }}</button>
+            <button type="submit" class="btn btn-primary">{{ $submission ? 'Update Submission' : 'Submit Work' }}</button>
             <a href="/learner/dashboard" class="btn btn-secondary">Cancel</a>
         </div>
     </form>

@@ -11,8 +11,8 @@
             <div style="background: #1e293b; border: 1px solid #475569; padding: 1rem; border-radius: 8px;">
                 <div style="margin-bottom: 10px; font-weight: bold; text-align: center;">{{ $learner->name }}</div>
                 <div style="margin-bottom: 10px; text-align: center;">
-                    <a href="/teacher/view-submission?brief_id={{ $brief->id }}&learner_id={{ $learner->id }}" class="btn" style="margin-right: 5px;">View Submission</a>
-                    <a href="/teacher/evaluate?brief_id={{ $brief->id }}&learner_id={{ $learner->id }}" class="btn">Evaluate</a>
+                    <a href="/teacher/view-submission?brief_id={{ $brief->id }}&learner_id={{ $learner->id }}" class="btn btn-primary mr-2">View Submission</a>
+                    <a href="/teacher/evaluate?brief_id={{ $brief->id }}&learner_id={{ $learner->id }}" class="btn btn-secondary">Evaluate</a>
                 </div>
             </div>
         @endforeach

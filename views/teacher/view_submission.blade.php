@@ -26,7 +26,7 @@
 </div>
 
 <div style="margin-top: 2rem; text-align: center;">
-    <a href="/teacher/debrief?brief_id={{ $brief->id }}" class="btn btn-secondary" style="margin-right: 1rem;">Back to Learners</a>
-    <a href="/teacher/evaluate?brief_id={{ $brief->id }}&learner_id={{ $learner->id }}" class="btn">Evaluate</a>
+    <a href="/teacher/debrief?brief_id={{ $brief->id }}" class="btn btn-secondary mr-4">Back to Learners</a>
+    <a href="/teacher/evaluate?brief_id={{ $brief->id }}&learner_id={{ $learner->id }}" class="btn btn-primary">Evaluate</a>
 </div>
 @endsection

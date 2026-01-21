@@ -34,7 +34,7 @@
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn">Create Brief</button>
+            <button type="submit" class="btn btn-primary">Create Brief</button>
             <a href="/teacher/dashboard" class="btn btn-secondary">Cancel</a>
         </div>
     </form>

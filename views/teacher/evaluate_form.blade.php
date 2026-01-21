@@ -26,7 +26,7 @@
             </div>
         @endforeach
 
-        <button type="submit" class="btn">Submit Evaluation</button>
+        <button type="submit" class="btn btn-primary">Submit Evaluation</button>
     </form>
 </div>
 @endsection
