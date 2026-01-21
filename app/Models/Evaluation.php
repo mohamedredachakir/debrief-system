@@ -47,4 +47,3 @@ class Evaluation extends Model
         ]);
     }
 }
-
