@@ -40,7 +40,6 @@ class AuthController extends Controller
             $_SESSION['user_role'] = $user->role;
             $_SESSION['user_name'] = $user->name;
 
-            // Redirect based on role
             switch ($user->role) {
                 case 'admin':
                     $this->redirect('/admin/dashboard');
