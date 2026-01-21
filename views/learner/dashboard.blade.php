@@ -11,8 +11,7 @@
             <p>{{ $brief->description }}</p>
             <span style="font-size: 0.8rem; background: #334155; padding: 2px 8px; border-radius: 4px;">{{ $brief->type }}</span>
             <div style="margin-top: 1rem;">
-                <!-- Mock Status -->
-                <span style="color: #4ade80;">Validated ✅</span>
+                <a href="/learner/submit?brief_id={{ $brief->id }}" class="btn">Submit Work</a>
             </div>
         </div>
     @endforeach
