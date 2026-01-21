@@ -84,4 +84,3 @@ class TeacherController extends Controller
         $this->redirect("/teacher/debrief?brief_id=$briefId");
     }
 }
-
