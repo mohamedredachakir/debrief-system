@@ -5,7 +5,8 @@ namespace App\Models;
 use App\Core\Database;
 use PDO;
 
-abstract class Model 
+#[\AllowDynamicProperties]
+abstract class Model
 {
 
     protected static function getDB() {

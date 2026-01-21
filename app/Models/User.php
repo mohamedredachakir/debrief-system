@@ -15,7 +15,9 @@ class User extends Model
     public string $password;
     public string $role;
     public ?int $class_id = null;
-    public ?string $class_name = null; 
+    public ?string $class_name = null;
+    public string $created_at;
+    public string $updated_at;
 
     public function __construct() {}
 

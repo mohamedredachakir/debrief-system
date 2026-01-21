@@ -12,6 +12,7 @@ class Brief extends Model
     public ?int $duration_days;
     public ?string $type;
     public int $sprint_id;
+    public string $created_at;
 
     public function __construct() {}
 
