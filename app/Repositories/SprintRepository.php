@@ -27,11 +27,10 @@ class SprintRepository implements RepositoryInterface
     {
         $db = \App\Core\Database::getInstance();
         $conn = $db->getConnection();
-        
+
         try {
             $conn->beginTransaction();
 
-            // Insert Sprint
             $sql = "INSERT INTO sprints (name, start_date, duration) VALUES (:name, :start_date, :duration)";
             $stmt = $conn->prepare($sql);
             $stmt->execute([
@@ -41,7 +40,6 @@ class SprintRepository implements RepositoryInterface
             ]);
             $sprintId = $conn->lastInsertId();
 
-            // Insert Class Links
             if (!empty($data['class_ids'])) {
                 $sqlClass = "INSERT INTO class_sprint (class_id, sprint_id) VALUES (:cid, :sid)";
                 $stmtClass = $conn->prepare($sqlClass);
@@ -50,7 +48,6 @@ class SprintRepository implements RepositoryInterface
                 }
             }
 
-            // Insert Competence Links
             if (!empty($data['competence_ids'])) {
                 $sqlComp = "INSERT INTO sprint_competences (sprint_id, competence_id) VALUES (:sid, :compid)";
                 $stmtComp = $conn->prepare($sqlComp);
@@ -84,7 +81,6 @@ class SprintRepository implements RepositoryInterface
                 'id' => $id
             ]);
 
-            // Sync Classes: Delete all and re-insert
             $conn->prepare("DELETE FROM class_sprint WHERE sprint_id = ?")->execute([$id]);
             if (!empty($data['class_ids'])) {
                 $sqlClass = "INSERT INTO class_sprint (class_id, sprint_id) VALUES (:cid, :sid)";
@@ -94,7 +90,6 @@ class SprintRepository implements RepositoryInterface
                 }
             }
 
-            // Sync Competences
             $conn->prepare("DELETE FROM sprint_competences WHERE sprint_id = ?")->execute([$id]);
             if (!empty($data['competence_ids'])) {
                 $sqlComp = "INSERT INTO sprint_competences (sprint_id, competence_id) VALUES (:sid, :compid)";
@@ -125,6 +120,5 @@ class SprintRepository implements RepositoryInterface
         $stmt->execute([$sprintId]);
         return $stmt->fetchAll(\PDO::FETCH_COLUMN);
     }
-
 
 }
