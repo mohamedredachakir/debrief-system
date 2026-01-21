@@ -14,3 +14,4 @@ class AdminController extends Controller
         $this->view('admin.dashboard');
     }
 }
+
