@@ -2,11 +2,6 @@
 
 use App\Controllers\HomeController;
 
-// Example routes
-// $router->get('/', [HomeController::class, 'index']);
-// $router->get('/login', [AuthController::class, 'loginForm']);
-// $router->post('/login', [AuthController::class, 'login']);
-
 $router->get('/', ['HomeController', 'index']);
 $router->get('/login', ['AuthController', 'loginForm']);
 $router->post('/login', ['AuthController', 'login']);
@@ -39,15 +34,13 @@ $router->post('/admin/users/update', ['UserController', 'update']);
 $router->get('/admin/sprints/briefs', ['BriefController', 'index']);
 
 $router->get('/teacher/dashboard', ['TeacherController', 'dashboard']);
+$router->get('/teacher/briefs/create', ['BriefController', 'create']);
+$router->post('/teacher/briefs/store', ['BriefController', 'store']);
 $router->get('/teacher/debrief', ['TeacherController', 'debrief']);
+$router->get('/teacher/view-submission', ['TeacherController', 'viewSubmission']);
 $router->get('/teacher/evaluate', ['TeacherController', 'evaluate']);
 $router->post('/teacher/evaluate/store', ['TeacherController', 'storeEvaluation']);
 
 $router->get('/learner/dashboard', ['LearnerController', 'dashboard']);
-
-
-
-
-
-
-
+$router->get('/learner/submit', ['LearnerController', 'submitForm']);
+$router->post('/learner/submit', ['LearnerController', 'submitWork']);
