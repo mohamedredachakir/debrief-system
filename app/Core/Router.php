@@ -21,7 +21,6 @@ class Router
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $method = $_SERVER['REQUEST_METHOD'];
 
-        // Remove trailing slashes (except root) for consistency
         if ($uri !== '/' && substr($uri, -1) === '/') {
             $uri = rtrim($uri, '/');
         }
@@ -30,7 +29,7 @@ class Router
             $controllerAction = $this->routes[$method][$uri];
             $this->callAction($controllerAction);
         } else {
-            // Simple 404
+
             http_response_code(404);
             echo "404 Not Found";
         }
@@ -44,8 +43,7 @@ class Router
         }
 
         [$controllerName, $method] = $controllerAction;
-        
-        // Add namespace if not present
+
         if (strpos($controllerName, '\\') === false) {
             $controllerName = "App\\Controllers\\$controllerName";
         }
