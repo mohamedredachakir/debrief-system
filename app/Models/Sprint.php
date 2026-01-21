@@ -45,4 +45,3 @@ class Sprint extends Model
         return self::fetchAll("SELECT * FROM sprints WHERE class_id = :cid ORDER BY start_date ASC", ['cid' => $classId], self::class);
     }
 }
-
