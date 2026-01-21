@@ -1,0 +1,40 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_DATABASE=debrief_db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=secret
+      - APP_ENV=local
+    depends_on:
+      - db
+    networks:
+      - debrief-net
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: debrief_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - debrief-net
+
+networks:
+  debrief-net:
+    driver: bridge
+
+volumes:
+  db_data:
