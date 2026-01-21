@@ -70,3 +70,4 @@ class UserRepository implements RepositoryInterface
         return User::fetchAll("SELECT * FROM users WHERE class_id = :cid AND role = :role", ['cid' => $classId, 'role' => $role], User::class);
     }
 }
+
