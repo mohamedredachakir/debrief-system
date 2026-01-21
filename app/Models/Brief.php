@@ -5,7 +5,7 @@ namespace App\Models;
 class Brief extends Model
 {
     protected $table = 'briefs';
-    
+
     public int $id;
     public string $title;
     public ?string $description;
@@ -13,21 +13,7 @@ class Brief extends Model
     public ?string $type;
     public int $sprint_id;
 
-    public function __construct(
-        int $id = 0,
-        string $title = '',
-        ?string $description = null,
-        ?int $duration_days = null,
-        ?string $type = null,
-        int $sprint_id = 0
-    ) {
-        $this->id = $id;
-        $this->title = $title;
-        $this->description = $description;
-        $this->duration_days = $duration_days;
-        $this->type = $type;
-        $this->sprint_id = $sprint_id;
-    }
+    public function __construct() {}
 
     public static function getBySprint($sprintId)
     {
