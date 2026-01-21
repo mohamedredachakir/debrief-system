@@ -10,10 +10,9 @@ abstract class Controller
 
     public function __construct()
     {
-        $root = dirname(__DIR__, 2); // /var/www/html
+        $root = dirname(__DIR__, 2); 
         $views = $root . '/views';
         $cache = $root . '/storage/cache';
-        // echo "Debug Cache Path: " . $cache;
 
         if (!is_dir($cache)) {
             mkdir($cache, 0777, true);
