@@ -16,3 +16,4 @@ class EvaluationRepository implements RepositoryInterface
     
     // Additional methods for fetching by user/brief if needed
 }
+
