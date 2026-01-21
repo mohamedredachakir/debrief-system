@@ -12,7 +12,25 @@ class ClassController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->checkAuth('admin');
         $this->service = new StructureService();
+    }
+
+    private function checkAuth($requiredRole = null)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+
+        if ($requiredRole && $_SESSION['user_role'] !== $requiredRole) {
+            header('Location: /login');
+            exit();
+        }
     }
 
     public function index()
@@ -42,8 +60,6 @@ class ClassController extends Controller
         $id = $_GET['id'] ?? null;
         if (!$id) { $this->redirect('/admin/classes'); return; }
 
-        // Fetch class by ID (need to add this to Service/Repo first if missing)
-        // For now assuming find method exists or implementing it
         $class = $this->service->getClass($id); 
         $this->view('admin.classes.edit', ['class' => $class]);
     }
@@ -52,7 +68,7 @@ class ClassController extends Controller
     {
         $id = $_POST['id'] ?? null;
         $name = $_POST['name'] ?? '';
-        
+
         if ($id && !empty($name)) {
             $this->service->updateClass($id, $name);
         }
