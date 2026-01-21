@@ -6,26 +6,54 @@ use App\Core\Controller;
 use App\Services\StructureService;
 use App\Services\UserService;
 use App\Services\EvaluationService;
+use App\Services\SubmissionService;
 
 class TeacherController extends Controller
 {
     private $structureService;
     private $userService;
     private $evaluationService;
+    private $submissionService;
 
     public function __construct()
     {
         parent::__construct();
+        $this->checkAuth('teacher');
         $this->structureService = new StructureService();
         $this->userService = new UserService();
         $this->evaluationService = new EvaluationService();
+        $this->submissionService = new SubmissionService();
+    }
+
+    private function checkAuth($requiredRole = null)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+
+        if ($requiredRole && $_SESSION['user_role'] !== $requiredRole) {
+            header('Location: /login');
+            exit();
+        }
     }
 
     public function dashboard()
     {
-        // Mock: Get Briefs assigned to teacher's class (Sprint 1)
-        $briefs = $this->structureService->getBriefsForSprint(1);
-        $this->view('teacher.dashboard', ['briefs' => $briefs]);
+        $teacherId = $_SESSION['user_id'] ?? null;
+        $sprints = $this->structureService->getSprintsForTeacherClasses($teacherId);
+
+        $sprintsWithBriefs = [];
+        foreach ($sprints as $sprint) {
+            $sprint->briefs = $this->structureService->getBriefsForSprint($sprint->id);
+            $sprintsWithBriefs[] = $sprint;
+        }
+
+        $this->view('teacher.dashboard', ['sprints' => $sprintsWithBriefs]);
     }
 
     public function debrief()
@@ -33,28 +61,60 @@ class TeacherController extends Controller
         $briefId = $_GET['brief_id'] ?? null;
         if (!$briefId) { $this->redirect('/teacher/dashboard'); return; }
 
-        // Mock: Get Learners in class (Class 1)
-        $learners = $this->userService->getLearnersByClass(1);
-        
-        // Pseudo-load brief for title
-        $brief = $this->structureService->getBrief($briefId); // Need to ensure getBrief exists in StructureService or repo
-        // Fallback if not implemented in service yet
+        $brief = $this->structureService->getBrief($briefId);
         if (!$brief) {
-             $brief = (object)['id' => $briefId, 'title' => 'Brief ' . $briefId];
+            $this->redirect('/teacher/dashboard');
+            return;
+        }
+
+        $sprintClassIds = $this->structureService->getSprintClasses($brief->sprint_id);
+
+        $learners = [];
+        foreach ($sprintClassIds as $classId) {
+            $classLearners = $this->userService->getLearnersByClass($classId);
+            $learners = array_merge($learners, $classLearners);
         }
 
         $this->view('teacher.debrief', ['brief' => $brief, 'learners' => $learners]);
+    }
+
+    public function viewSubmission()
+    {
+        $briefId = $_GET['brief_id'] ?? null;
+        $learnerId = $_GET['learner_id'] ?? null;
+
+        if (!$briefId || !$learnerId) { $this->redirect('/teacher/dashboard'); return; }
+
+        $brief = $this->structureService->getBrief($briefId);
+        if (!$brief) {
+            $this->redirect('/teacher/dashboard');
+            return;
+        }
+
+        $learner = $this->userService->getUser($learnerId);
+        if (!$learner) {
+            $this->redirect('/teacher/dashboard');
+            return;
+        }
+
+        $submission = $this->submissionService->getSubmission($briefId, $learnerId);
+
+        $this->view('teacher.view_submission', [
+            'brief' => $brief,
+            'learner' => $learner,
+            'submission' => $submission
+        ]);
     }
 
     public function evaluate()
     {
         $briefId = $_GET['brief_id'] ?? null;
         $learnerId = $_GET['learner_id'] ?? null;
-        
+
         if (!$briefId || !$learnerId) { $this->redirect('/teacher/dashboard'); return; }
 
         $competences = $this->structureService->getAllCompetences();
-        
+
         $this->view('teacher.evaluate_form', [
             'brief_id' => $briefId,
             'learner_id' => $learnerId,
@@ -80,7 +140,7 @@ class TeacherController extends Controller
                 ]);
             }
         }
-        
+
         $this->redirect("/teacher/debrief?brief_id=$briefId");
     }
 }
