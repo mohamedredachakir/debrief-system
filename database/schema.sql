@@ -122,4 +122,3 @@ ALTER TABLE users ADD CONSTRAINT fk_user_class FOREIGN KEY (class_id) REFERENCES
 INSERT INTO users (name, email, password, role) VALUES 
 ('Admin User', 'admin@debrief.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'); 
 -- Password is 'password' (bcrypt)
-
