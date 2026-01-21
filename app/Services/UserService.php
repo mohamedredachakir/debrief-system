@@ -22,7 +22,7 @@ class UserService
     {
         return $this->userRepo->getByClass($classId, 'learner');
     }
-    
+
     public function getUser($id)
     {
         return $this->userRepo->find($id);
@@ -30,7 +30,7 @@ class UserService
 
     public function createUser($data)
     {
-        // Hash password if provided
+
         if (isset($data['password'])) {
             $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
         }
@@ -42,8 +42,13 @@ class UserService
          if (!empty($data['password'])) {
             $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
         } else {
-            unset($data['password']); // Don't overwrite if empty
+            unset($data['password']);
         }
         return $this->userRepo->update($id, $data);
+    }
+
+    public function getTeacherClasses($teacherId)
+    {
+        return $this->userRepo->getTeacherClasses($teacherId);
     }
 }
