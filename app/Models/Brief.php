@@ -40,3 +40,4 @@ class Brief extends Model
         return self::fetchAll("SELECT * FROM briefs WHERE sprint_id = :sid", ['sid' => $sprintId], self::class);
     }
 }
+
