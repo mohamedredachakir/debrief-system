@@ -13,6 +13,5 @@ class EvaluationRepository implements RepositoryInterface
     {
         return Evaluation::create($data);
     }
-    
-    // Additional methods for fetching by user/brief if needed
+
 }
