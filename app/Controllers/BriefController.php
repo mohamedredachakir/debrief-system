@@ -27,3 +27,4 @@ class BriefController extends Controller
         $this->view('admin.briefs.index', ['briefs' => $briefs, 'sprint_id' => $sprintId]);
     }
 }
+
