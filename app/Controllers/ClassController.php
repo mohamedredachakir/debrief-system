@@ -59,4 +59,3 @@ class ClassController extends Controller
         $this->redirect('/admin/classes');
     }
 }
-
