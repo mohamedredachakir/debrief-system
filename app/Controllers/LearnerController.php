@@ -25,4 +25,3 @@ class LearnerController extends Controller
         $this->view('learner.dashboard', ['briefs' => $briefs, 'evaluations' => $evaluations]);
     }
 }
-
