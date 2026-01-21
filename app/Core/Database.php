@@ -29,7 +29,7 @@ class Database
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            // Fallback to Mock Mode if DB fails
+
             $this->isMock = true;
             error_log("Database connection failed, switching to MOCK mode: " . $e->getMessage());
         }
@@ -52,12 +52,11 @@ class Database
     {
         return $this->isMock;
     }
-    
-    // Simple mock query handler
+
     public function mockQuery($query, $params = []) {
-        // Return dummy data based on query content
+
         if (strpos($query, 'SELECT * FROM users WHERE email') !== false) {
-             // Mock Login
+
              return (object) [
                  'id' => 1,
                  'name' => 'Admin User',
