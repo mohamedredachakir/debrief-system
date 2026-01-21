@@ -56,55 +56,7 @@
             },
         }
     </script>
-    <style>
-        .btn {
-            @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
-        }
-        .btn-primary {
-            @apply bg-brand-600 text-white hover:bg-brand-700 shadow-sm hover:shadow-md;
-        }
-        .btn-secondary {
-            @apply bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 shadow-sm hover:shadow-md;
-        }
-        .btn-ghost {
-            @apply text-slate-600 hover:text-slate-900 hover:bg-slate-100;
-        }
-        .input {
-            @apply block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition-colors;
-        }
-        .card {
-            @apply rounded-xl bg-white p-6 shadow-sm border border-slate-200/60;
-        }
-        .card-header {
-            @apply pb-4 mb-4 border-b border-slate-100;
-        }
-        .card-title {
-            @apply text-lg font-semibold text-slate-900;
-        }
-        .badge {
-            @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
-        }
-        .badge-primary {
-            @apply bg-brand-100 text-brand-800;
-        }
-        .badge-secondary {
-            @apply bg-slate-100 text-slate-700;
-        }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        .slide-up {
-            animation: slideUp 0.3s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideUp {
-            from { transform: translateY(10px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-    </style>
+    <link rel="stylesheet" href="/css/app.css">
 </head>
 <body class="bg-slate-50">
     <nav class="nav-blur sticky top-0 z-50 shadow-sm">
