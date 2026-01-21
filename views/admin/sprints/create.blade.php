@@ -13,17 +13,17 @@
     <div class="auth-card" style="max-width:600px;">
         <form action="/admin/sprints/store" method="POST">
             <input type="hidden" name="default_class_id" value="{{ $default_class_id }}">
-            
+
             <div class="form-group">
                 <label>Name</label>
                 <input type="text" name="name" required placeholder="Sprint X: Topic">
             </div>
-            
+
             <div class="form-group">
                  <label>Start Date</label>
                  <input type="date" name="start_date" required>
             </div>
-            
+
             <div class="form-group">
                  <label>Duration (Days)</label>
                  <input type="number" name="duration" required min="1" value="5">
