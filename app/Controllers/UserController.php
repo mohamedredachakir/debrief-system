@@ -3,8 +3,8 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Services\UserService; // We will use UserService directly or via StructureService if preferred. Let's stick to Service pattern.
-use App\Services\StructureService; // To get classes for dropdown
+use App\Services\UserService; 
+use App\Services\StructureService; 
 
 class UserController extends Controller
 {
@@ -14,8 +14,26 @@ class UserController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->checkAuth('admin');
         $this->userService = new UserService();
         $this->structureService = new StructureService();
+    }
+
+    private function checkAuth($requiredRole = null)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+
+        if ($requiredRole && $_SESSION['user_role'] !== $requiredRole) {
+            header('Location: /login');
+            exit();
+        }
     }
 
     public function index()
@@ -32,7 +50,7 @@ class UserController extends Controller
 
     public function store()
     {
-        // Basic validation
+
         if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'])) {
             $this->redirect('/admin/users/create');
             return;
@@ -49,7 +67,7 @@ class UserController extends Controller
 
         $user = $this->userService->getUser($id);
         $classes = $this->structureService->getAllClasses();
-        
+
         $this->view('admin.users.edit', ['user' => $user, 'classes' => $classes]);
     }
 
