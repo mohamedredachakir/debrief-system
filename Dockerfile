@@ -10,8 +10,9 @@ RUN a2enmod rewrite
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy application code
+# Copy application code, excluding .env
 COPY . /var/www/html
+RUN rm -f /var/www/html/.env
 
 # Copy Apache Config
 COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
