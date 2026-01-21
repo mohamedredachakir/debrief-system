@@ -23,4 +23,3 @@ class AuthService
         return null;
     }
 }
-
