@@ -39,3 +39,4 @@ class CompetenceRepository implements RepositoryInterface
         ]);
     }
 }
+
