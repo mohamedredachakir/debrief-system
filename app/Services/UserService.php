@@ -47,4 +47,3 @@ class UserService
         return $this->userRepo->update($id, $data);
     }
 }
-
