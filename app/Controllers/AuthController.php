@@ -39,6 +39,7 @@ class AuthController extends Controller
             $_SESSION['user_id'] = $user->id;
             $_SESSION['user_role'] = $user->role;
             $_SESSION['user_name'] = $user->name;
+            $_SESSION['user_class_id'] = $user->class_id ?? null;
 
             switch ($user->role) {
                 case 'admin':
