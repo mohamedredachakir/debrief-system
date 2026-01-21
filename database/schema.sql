@@ -1,4 +1,3 @@
--- Clean up existing tables to ensure schema changes apply
 DROP TABLE IF EXISTS evaluations CASCADE;
 DROP TABLE IF EXISTS brief_competences CASCADE;
 DROP TABLE IF EXISTS sprint_competences CASCADE;
@@ -11,10 +10,8 @@ DROP TABLE IF EXISTS classes CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TYPE IF EXISTS competence_level CASCADE;
 
--- Create Enum Type for Levels
 CREATE TYPE competence_level AS ENUM ('IMITER', 'S_ADAPTER', 'TRANSPOSER');
 
--- Users Table (Admin, Teacher, Apprenant)
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -26,14 +23,12 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Classes Table
 CREATE TABLE classes (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Teacher-Classes Association (Many-to-Many)
 CREATE TABLE teacher_classes (
     teacher_id INT NOT NULL,
     class_id INT NOT NULL,
@@ -42,7 +37,6 @@ CREATE TABLE teacher_classes (
     FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE
 );
 
--- Sprints Table
 CREATE TABLE sprints (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -51,7 +45,6 @@ CREATE TABLE sprints (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Class-Sprint Association (Many-to-Many)
 CREATE TABLE class_sprint (
     class_id INT NOT NULL,
     sprint_id INT NOT NULL,
@@ -60,7 +53,6 @@ CREATE TABLE class_sprint (
     FOREIGN KEY (sprint_id) REFERENCES sprints(id) ON DELETE CASCADE
 );
 
--- Briefs Table
 CREATE TABLE briefs (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
@@ -72,7 +64,6 @@ CREATE TABLE briefs (
     FOREIGN KEY (sprint_id) REFERENCES sprints(id) ON DELETE CASCADE
 );
 
--- Competences Table
 CREATE TABLE competences (
     id SERIAL PRIMARY KEY,
     code VARCHAR(50) NOT NULL UNIQUE, -- C1, C2
@@ -80,7 +71,6 @@ CREATE TABLE competences (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Sprint-Competences Association (New)
 CREATE TABLE sprint_competences (
     sprint_id INT NOT NULL,
     competence_id INT NOT NULL,
@@ -89,7 +79,6 @@ CREATE TABLE sprint_competences (
     FOREIGN KEY (competence_id) REFERENCES competences(id) ON DELETE CASCADE
 );
 
--- Brief-Competences Association
 CREATE TABLE brief_competences (
     brief_id INT NOT NULL,
     competence_id INT NOT NULL,
@@ -98,7 +87,18 @@ CREATE TABLE brief_competences (
     FOREIGN KEY (competence_id) REFERENCES competences(id) ON DELETE CASCADE
 );
 
--- Evaluations Table (Debriefing)
+CREATE TABLE submissions (
+    id SERIAL PRIMARY KEY,
+    learner_id INT NOT NULL,
+    brief_id INT NOT NULL,
+    project_link VARCHAR(500),
+    comments TEXT,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (learner_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (brief_id) REFERENCES briefs(id) ON DELETE CASCADE,
+    UNIQUE(learner_id, brief_id) -- One submission per learner per brief
+);
+
 CREATE TABLE evaluations (
     id SERIAL PRIMARY KEY,
     learner_id INT NOT NULL,
@@ -115,10 +115,7 @@ CREATE TABLE evaluations (
     UNIQUE(learner_id, brief_id, competence_id)
 );
 
--- Add Foreign Key for Learners in Users table
 ALTER TABLE users ADD CONSTRAINT fk_user_class FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE SET NULL;
 
--- Initial Seed Data
 INSERT INTO users (name, email, password, role) VALUES 
 ('Admin User', 'admin@debrief.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'); 
--- Password is 'password' (bcrypt)
