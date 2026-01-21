@@ -5,17 +5,12 @@ namespace App\Models;
 class Competence extends Model
 {
     protected $table = 'competences';
-    
+
     public int $id;
     public string $code;
     public string $label;
 
-    public function __construct(int $id = 0, string $code = '', string $label = '')
-    {
-        $this->id = $id;
-        $this->code = $code;
-        $this->label = $label;
-    }
+    public function __construct() {}
 
     public static function all()
     {
