@@ -59,3 +59,4 @@ class UserController extends Controller
         $this->redirect('/admin/users');
     }
 }
+
