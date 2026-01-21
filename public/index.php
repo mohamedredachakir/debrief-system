@@ -19,3 +19,4 @@ require_once __DIR__ . '/../routes/web.php';
 
 // Dispatch
 $router->run();
+
