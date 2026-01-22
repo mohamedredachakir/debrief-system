@@ -6,7 +6,10 @@ use App\Models\Sprint;
 
 class SprintRepository implements RepositoryInterface
 {
-    public function all() { return []; }
+    public function all()
+    {
+        return Sprint::fetchAll("SELECT * FROM sprints ORDER BY start_date ASC", [], Sprint::class);
+    }
     public function getByClass($classId)
     {
         return Sprint::fetchAll(

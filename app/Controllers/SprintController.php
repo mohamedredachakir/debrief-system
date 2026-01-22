@@ -36,12 +36,13 @@ class SprintController extends Controller
     public function index()
     {
         $classId = $_GET['class_id'] ?? null;
-        if (!$classId) {
-            $this->redirect('/admin/classes'); 
-            return;
+        
+        if ($classId) {
+            $sprints = $this->service->getSprintsForClass($classId);
+        } else {
+            $sprints = $this->service->getAllSprints();
         }
-
-        $sprints = $this->service->getSprintsForClass($classId);
+        
         $this->view('admin.sprints.index', ['sprints' => $sprints, 'class_id' => $classId]);
     }
 
@@ -67,7 +68,7 @@ class SprintController extends Controller
         if (!empty($_POST['default_class_id'])) {
              $this->redirect('/admin/classes/sprints?class_id=' . $_POST['default_class_id']);
         } else {
-             $this->redirect('/admin/classes'); 
+             $this->redirect('/admin/sprints'); 
         }
     }
 
@@ -95,6 +96,10 @@ class SprintController extends Controller
     public function update()
     {
         $this->service->updateSprint($_POST['id'], $_POST);
-        $this->redirect('/admin/classes/sprints?class_id=' . $_POST['class_id']);
+        if (!empty($_POST['class_id'])) {
+            $this->redirect('/admin/classes/sprints?class_id=' . $_POST['class_id']);
+        } else {
+            $this->redirect('/admin/sprints');
+        }
     }
 }

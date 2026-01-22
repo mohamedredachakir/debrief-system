@@ -55,6 +55,11 @@ class StructureService
         return $this->sprintRepo->getByClass($classId);
     }
 
+    public function getAllSprints()
+    {
+        return $this->sprintRepo->all();
+    }
+
     public function createSprint($data)
     {
         return $this->sprintRepo->create($data);

@@ -16,6 +16,7 @@ $router->get('/admin/classes/edit', ['ClassController', 'edit']);
 $router->post('/admin/classes/update', ['ClassController', 'update']);
 
 $router->get('/admin/classes/sprints', ['SprintController', 'index']);
+$router->get('/admin/sprints', ['SprintController', 'index']);
 $router->get('/admin/sprints/create', ['SprintController', 'create']);
 $router->post('/admin/sprints/store', ['SprintController', 'store']);
 $router->get('/admin/sprints/edit', ['SprintController', 'edit']);
